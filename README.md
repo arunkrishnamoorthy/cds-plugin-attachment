@@ -14,7 +14,7 @@ https://github.com/cap-js/attachments
 
 The Attachments plugin provides out-of-the-box asset storage and handling. To use it, all we need to do is to extend the domain model by using the predefined aspect called Attachments, that is delivered as part of `@cap-js/attachment` plugin. 
 
-Preview: 
+**Preview:** 
 The `attachment` plugin also add the facets requried to display the attachment section on the Object page. This attachment sections uses the control <a href="https://sapui5.hana.ondemand.com/#/api/sap.m.upload.UploadSetwithTable">sap.m.upload.UploadSetwithTable</a>.
 
 > This is an Experimental API since version 1.120. In my example, i am using the UI5 version, 1.120.10. Using the later version i get an error from the macros Table API. 
@@ -23,11 +23,11 @@ The `attachment` plugin also add the facets requried to display the attachment s
 
 Clicking on the edit mode, will enable the Upload button. This button opens the file explorer to select the files. 
 
-![preview-attachment-1](./assets/images/preview-attachment-1.png)
+![preview-attachment-2](./assets/images/preview-attachment-2.png)
 
 The selected files are added to the table and submitted to the backend upon save. 
 
-![preview-attachment-1](./assets/images/preview-attachment-1.png)
+![preview-attachment-3](./assets/images/preview-attachment-3.png)
 
 
 # Step 1: Initialize the CAP Project
