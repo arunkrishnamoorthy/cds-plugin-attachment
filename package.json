@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/attachments": "^1.0.2",
     "@sap/cds": "^7",
     "express": "^4"
   },

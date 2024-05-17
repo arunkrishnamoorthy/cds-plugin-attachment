@@ -103,3 +103,26 @@ The list report page and object page of the application as of now should be as b
 ![list report preview](./assets/images/list-report-preview.png)
 
 ![object page preview](./assets/images/object-page-preview.png)
+
+# Step 4: Add the attachment Plugin. 
+
+To add the Attachment plugin, execute the following command from the terminal.
+
+```sh
+npm add @cap-js/attachments
+```
+
+In the `db` folder add a new schema file, let's name it `attachment.cds` and the following to extend the Book entity with the composition to attachment aspect from the attachment plugin. 
+
+```
+using {my.bookshop as my} from './data-model';
+using {Attachments} from '@cap-js/attachments';
+
+extend my.Books with {
+    attachments : Composition of many Attachments;
+}
+```
+
+And that's it!!. now run the `cds watch` and see the Magic. 
+
+![object page with attachment](./assets/images/object-page-with-attachment.png)
