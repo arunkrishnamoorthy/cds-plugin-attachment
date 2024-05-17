@@ -39,3 +39,33 @@ Execute the command `npm install` to install the dependencies.
 You can now start the cap server using the command `cds watch`. This will start the cap server on `http://localhost:4004`. 
 
 The service would now be empty without any entities defined. 
+
+# Step 2: Adding the sample CDS model.
+
+To add the sample cds model, execute the command `cds add tiny-sample` in the terminal. 
+
+This will add the entity definition in the `db` folder and add some sample data in the `data` folder. 
+
+```
+namespace my.bookshop;
+
+entity Books {
+  key ID : Integer;
+  title  : String;
+  stock  : Integer;
+}
+```
+
+In the `srv` folder, the book entity is exposed. I have modified the generated code to remove the `@readonly` and add enabled draft handling. 
+
+```
+using my.bookshop as my from '../db/data-model';
+
+service CatalogService {
+    entity Books as projection on my.Books;
+    annotate Books with @odata.draft.enabled;
+}
+```
+
+# Step 3: Add the UI5 Application 
+
