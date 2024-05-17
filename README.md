@@ -67,5 +67,12 @@ service CatalogService {
 }
 ```
 
+Execute the command `cds watch` to run the service. 
+
+![cds watch preview](./assets/images/cds-watch-preview.png)
+
 # Step 3: Add the UI5 Application 
+
+Open the Fiori Application generator from the menu view -> command palette -> Fiori: Open Application Generator. 
+
 
