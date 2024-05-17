@@ -67,5 +67,39 @@ service CatalogService {
 }
 ```
 
+Execute the command `cds watch` to run the service. 
+
+![cds watch preview](./assets/images/cds-watch-preview.png)
+
 # Step 3: Add the UI5 Application 
 
+Open the Fiori Application generator from the menu view -> command palette -> Fiori: Open Application Generator. 
+
+In the wizard, select the list report template. 
+
+![select list report](./assets/images/select-list-report.png)
+
+Map the data source to the local cap project and select the catalog service. 
+
+![select data source](./assets/images/select-data-source.png)
+
+Select the books entity. 
+
+![select entity](./assets/images/select_entity.png)
+
+Enter the project details and click on finish. This will add the ui5 application in the app folder. 
+
+![enter project details](./assets/images/enter_project_details.png)
+
+> In the generated project, update the path of the service in the manifest.json.
+> ![update manifest](./assets/images/update-manifest.png)
+
+Execute the command `cds watch` to run the service. Now you should be able to see the ui5 application served. 
+
+![App preview](./assets/images/manage-bookshop-ui.png)
+
+The list report page and object page of the application as of now should be as below. 
+
+![list report preview](./assets/images/list-report-preview.png)
+
+![object page preview](./assets/images/object-page-preview.png)
