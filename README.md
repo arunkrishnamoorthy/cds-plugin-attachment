@@ -126,3 +126,87 @@ extend my.Books with {
 And that's it!!. now run the `cds watch` and see the Magic. 
 
 ![object page with attachment](./assets/images/object-page-with-attachment.png)
+
+# How did it work?
+
+The Plugin for Attachment, provides two aspects named `MediaData` and `Attachment`. 
+
+```
+using { managed, cuid } from '@sap/cds/common';
+
+aspect MediaData @(_is_media_data) {
+  url      : String;
+  content  : LargeBinary @title: 'Attachment'; // only for db-based services
+  mimeType : String @title: 'Media Type' default 'application/octet-stream';
+  filename : String @title: 'Filename';
+  status   :  String @title: 'Status' enum {
+    Unscanned;
+    Scanning;
+    Infected;
+    Clean;
+  } default 'Unscanned';
+}
+
+aspect Attachments : managed, cuid, MediaData {
+  note : String @title: 'Note';
+}
+```
+
+The Media Data Aspect is annotated with `@UI.MediaResource` to specify which field represent `MediaType` and which field represents the `MimeType`. 
+
+```
+annotate MediaData with @UI.MediaResource: { Stream: content } {
+  content  @Core.MediaType: mimeType @odata.draft.skip;
+  mimeType @Core.IsMediaType;
+  status @readonly;
+}
+```
+
+The Attachment Aspect is annotated with the `LineItem`. 
+
+```
+annotate Attachments with @UI:{
+  LineItem: [
+    {Value: content},
+    {Value: status},
+    {Value: createdAt},
+    {Value: createdBy},
+    {Value: note}
+  ]
+} {
+  content
+    @Core.ContentDisposition: { Filename: filename, Type: 'inline' }
+    @Core.Immutable
+}
+```
+
+At runtime, when the plugin is called, the Line item annotation is added the UI facets by the plugin. 
+
+Refer to file: node_modules>@cap-js>attachment>lib>plugin.js
+
+```js
+cds.on("loaded", function unfoldModel(csn) {
+  if (!("Attachments" in csn.definitions)) return;
+  cds.linked(csn).forall("Composition", (comp) => {
+    if (comp._target["@_is_media_data"] && comp.parent && comp.is2many) {
+      let facets = comp.parent["@UI.Facets"];
+      if (!facets) return;
+      DEBUG?.("Adding @UI.Facet to:", comp.parent.name);
+      facets.push({
+        $Type: "UI.ReferenceFacet",
+        Target: `${comp.name}/@UI.LineItem`,
+        Label: "{i18n>Attachments}",
+      });
+    }
+  });
+});
+```
+
+The example about different plugin can be found in the github repository Incidents. 
+https://github.com/cap-js/incidents-app
+
+
+The repository of this example is available in :
+https://github.com/arunkrishnamoorthy/cds-plugin-attachment
+
+Also if you want to try the same, with out the attachment plugin to see how it its working, checkout this below repository. 
